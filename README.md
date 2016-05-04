@@ -10,6 +10,7 @@ java 1.7+
 ```gradle
 repositories {
     maven { url "https://jitpack.io" }
+    maven{ url "http://dl.bintray.com/riccardo/v-hacd" }
 }
 
 dependencies {
