@@ -1,0 +1,13 @@
+.classpath
+.project
+*.so
+*.dll
+.settings
+cache
+bin
+target
+*.jar
+*.class
+~*
+*~
+.gradle

@@ -1,0 +1,27 @@
+apply plugin: 'java'
+
+
+def jme_version ="3.1.0-beta1"
+def jme_group =  "org.jmonkeyengine"	
+def javaVersion='1.7'
+
+targetCompatibility = javaVersion
+sourceCompatibility = javaVersion
+			
+repositories {
+  	jcenter()	
+  	
+	maven{
+	        url "http://dl.bintray.com/riccardo/v-hacd" 
+	}
+}	
+
+dependencies {
+    runtime "${jme_group}:jme3-core:${jme_version}"
+    runtime "${jme_group}:jme3-effects:${jme_version}"
+    runtime "${jme_group}:jme3-bullet:${jme_version}"
+    runtime "${jme_group}:jme3-bullet-native:${jme_version}"
+    runtime "${jme_group}:jme3-lwjgl:${jme_version}"
+    runtime "${jme_group}:jme3-desktop:${jme_version}"
+    compile "vhacd:vhacd-native:1.1"    
+  }
