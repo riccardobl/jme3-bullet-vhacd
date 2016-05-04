@@ -13,7 +13,7 @@ repositories {
 }
 
 dependencies {
-    compile 'com.github.riccardobl:jme3-bullet-vhacd:0.1'
+    compile 'com.github.riccardobl:jme3-bullet-vhacd:0.1.1'
 }
 ```
 
