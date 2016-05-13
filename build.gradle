@@ -1,20 +1,16 @@
 apply plugin: 'java'
 
-configurations {
-    provided
+buildscript {
+	repositories {
+		jcenter()
+		maven { url "https://plugins.gradle.org/m2/" }
+	}
+	dependencies {
+		classpath 'com.netflix.nebula:gradle-extra-configurations-plugin:3.0.+'
+	}
 }
+apply plugin: 'nebula.provided-base'
 
-sourceSets {
-    main {
-        compileClasspath += configurations.provided
-        runtimeClasspath += configurations.provided
-    }
-    test {
-        compileClasspath += configurations.provided
-        runtimeClasspath += configurations.provided
-    }
-}
- 
 def jme_version ="3.1.0-beta1"
 def jme_group =  "org.jmonkeyengine"	
 def javaVersion='1.7'

@@ -1,6 +1,8 @@
 package com.jme3.bullet.vhacd;
 
+import java.nio.Buffer;
 import java.nio.FloatBuffer;
+import java.nio.IntBuffer;
 import java.nio.ShortBuffer;
 import java.util.Collection;
 import java.util.LinkedList;
@@ -107,15 +109,21 @@ public class VHACDCollisionShapeFactory{
 		out=new CompoundCollisionShape();
 
 		FloatBuffer vb=(FloatBuffer)m.getBuffer(Type.Position).getData();
-		ShortBuffer ib=(ShortBuffer)m.getBuffer(Type.Index).getData();
+		Buffer ib=m.getBuffer(Type.Index).getData();
 		vb.rewind();
 		ib.rewind();
 
 		float positions[]=new float[vb.limit()];
 		int indexes[]=new int[ib.limit()];
 
-		for(int i=0;i<positions.length;i++)		positions[i]=vb.get(i);
-		for(int i=0;i<indexes.length;i++)		indexes[i]=(int)ib.get(i);
+		for(int i=0;i<positions.length;i++)	positions[i]=vb.get(i);
+		for(int i=0;i<indexes.length;i++){
+			if(ib instanceof IntBuffer){
+				indexes[i]=(int)((IntBuffer)ib).get(i);
+			}else{
+				indexes[i]=(int)((ShortBuffer)ib).get(i);
+			}
+		}
 
 		VHACDResults results=VHACD.compute(positions,indexes,p);
 		for(VHACDHull hull:results){
