@@ -23,7 +23,7 @@ dependencies {
 https://jitpack.io/#riccardobl/jme3-bullet-vhacd
 
 ____
-This library relies on vhacd native bindings whose build is currently available only for Linux and Windows.
+This library relies on vhacd native bindings whose build is currently available for 64 and 32 bit versions of Linux and Windows and for osx.
 
 #Usage
 ```java
