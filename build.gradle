@@ -1,15 +1,11 @@
 apply plugin: 'java'
+apply plugin: 'maven'
+apply plugin: 'maven-publish'
 
-buildscript {
-	repositories {
-		jcenter()
-		maven { url "https://plugins.gradle.org/m2/" }
-	}
-	dependencies {
-		classpath 'com.netflix.nebula:gradle-extra-configurations-plugin:3.0.+'
-	}
-}
-apply plugin: 'nebula.provided-base'
+[compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
+
+version= project.hasProperty('in_version') ? project.getProperty('in_version') : '-SNAPSHOT'
+group = "com.jme3"
 
 def jme_version ="3.1.0-beta1"
 def jme_group =  "org.jmonkeyengine"	
@@ -17,21 +13,54 @@ def javaVersion='1.7'
 
 targetCompatibility = javaVersion
 sourceCompatibility = javaVersion
-			
+
+		
 repositories {
-  	jcenter()	
-  	
+    jcenter()
 	maven{
-	        url "http://dl.bintray.com/riccardo/v-hacd" 
+	    url "http://dl.bintray.com/riccardo/v-hacd" 
 	}
 }	
 
 dependencies {
-    provided "${jme_group}:jme3-core:${jme_version}"
-    provided "${jme_group}:jme3-effects:${jme_version}"
-    provided "${jme_group}:jme3-bullet:${jme_version}"
-    provided "${jme_group}:jme3-bullet-native:${jme_version}"
-    provided "${jme_group}:jme3-lwjgl:${jme_version}"
-    provided "${jme_group}:jme3-desktop:${jme_version}"
+    compileOnly "${jme_group}:jme3-core:${jme_version}"
+    compileOnly "${jme_group}:jme3-bullet:${jme_version}"
+    compileOnly "${jme_group}:jme3-bullet-native:${jme_version}"
+
+    testCompile "${jme_group}:jme3-core:${jme_version}"
+    testCompile "${jme_group}:jme3-bullet:${jme_version}"
+    testCompile "${jme_group}:jme3-bullet-native:${jme_version}"
+    
+    testCompile "${jme_group}:jme3-effects:${jme_version}"
+    testCompile "${jme_group}:jme3-lwjgl:${jme_version}"
+    testCompile "${jme_group}:jme3-desktop:${jme_version}"
+
     compile "vhacd:vhacd-native:1.1.1"    
-  }
+}
+
+
+task sourceJar(type: Jar) {
+    from sourceSets.main.allJava
+}
+
+task packageJavadoc(type: Jar) {
+    from javadoc
+    classifier = 'javadoc'
+}
+
+publishing {
+    publications {
+        mavenJava (MavenPublication) { 
+            from components.java
+            artifact sourceJar {
+                    classifier "sources"
+            }
+            artifact packageJavadoc
+        }
+    }
+}
+
+task run( type: JavaExec,dependsOn: 'classes') {
+    main = 'vhacd.Test'
+    classpath = sourceSets.test.runtimeClasspath
+}
