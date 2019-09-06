@@ -1,6 +1,6 @@
 # JME3 V-HACD Collision Shape Factory
 
-This is a facility that uses [java bindings](https://github.com/riccardobl/v-hacd-java-bindings) for [Khaled Mamou's V-HACD](https://github.com/kmammou/v-hacd) to decompose concave meshes into hull-shapes in jmonkey engine.
+This is a library that uses [java bindings](https://github.com/riccardobl/v-hacd-java-bindings) for [Khaled Mamou's V-HACD](https://github.com/kmammou/v-hacd) to decompose concave meshes into hull-shapes in jmonkey engine.
 
 # Requirements
 java 1.7+
@@ -14,7 +14,7 @@ repositories {
 }
 
 dependencies {
-    compile 'com.github.riccardobl:jme3-bullet-vhacd:1.0'
+    compile 'com.github.riccardobl:jme3-bullet-vhacd:1.0.2'
 }
 ```
 
@@ -86,7 +86,3 @@ The cache will be swapped from disk to memory automatically and will be kept acr
 
 # License
 Everything in this repo, as well as V-HACD and V-HACD-bindings, is released under BSD 3-clause license.
-
-
-# P.S.
-Everything here is half untested and experimental, if you find an issue, please report it :).
