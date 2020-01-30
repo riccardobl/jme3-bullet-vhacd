@@ -35,7 +35,7 @@ dependencies {
     testCompile "${jme_group}:jme3-lwjgl:${jme_version}"
     testCompile "${jme_group}:jme3-desktop:${jme_version}"
 
-    compile "vhacd:vhacd-native:1.1.1"    
+    compile "vhacd:vhacd-native:1.1.2"    
 }
 
 
