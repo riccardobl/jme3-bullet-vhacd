@@ -1,13 +1,25 @@
+
+plugins {
+    id "io.github.0ffz.github-packages" version "1.2.1"
+}
+
 apply plugin: 'java'
 apply plugin: 'maven'
 apply plugin: 'maven-publish'
+
+
+repositories {
+    mavenCentral()
+    maven githubPackage.invoke("riccardobl/v-hacd-java-bindings")
+}	
+
 
 [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
 
 version= project.hasProperty('in_version') ? project.getProperty('in_version') : '-SNAPSHOT'
 group = "com.jme3"
 
-def jme_version ="3.1.0-beta1"
+def jme_version ="3.3.2-stable"
 def jme_group =  "org.jmonkeyengine"	
 def javaVersion='1.7'
 
@@ -15,12 +27,6 @@ targetCompatibility = javaVersion
 sourceCompatibility = javaVersion
 
 		
-repositories {
-    jcenter()
-	maven{
-	    url "http://dl.bintray.com/riccardo/v-hacd" 
-	}
-}	
 
 dependencies {
     compileOnly "${jme_group}:jme3-core:${jme_version}"
@@ -35,7 +41,7 @@ dependencies {
     testCompile "${jme_group}:jme3-lwjgl:${jme_version}"
     testCompile "${jme_group}:jme3-desktop:${jme_version}"
 
-    compile "vhacd:vhacd-native:1.1.2"    
+    compile "vhacd:vhacd-native:1.1.3"    
 }
 
 

@@ -8,13 +8,18 @@ java 1.7+
 # Installation
 ## Gradle
 ```gradle
+plugins {
+    id "io.github.0ffz.github-packages" version "1.2.1"
+}
+
 repositories {
+    mavenCentral()
+    maven githubPackage.invoke("riccardobl/v-hacd-java-bindings")
     maven { url "https://jitpack.io" }
-    maven{ url "http://dl.bintray.com/riccardo/v-hacd" }
 }
 
 dependencies {
-    compile 'com.github.riccardobl:jme3-bullet-vhacd:1.0.2'
+    compile 'com.github.riccardobl:jme3-bullet-vhacd:1.0.4'
 }
 ```
 
