@@ -1,0 +1,56 @@
+
+name: Build jme3-bullet-vhacd
+on:
+  push:
+  pull_request:
+  release:
+    types: [published]
+  
+jobs:  
+  Build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clone the repo
+        uses: actions/checkout@v2     
+        with:
+          fetch-depth: 1
+
+      - name: Build with gradle
+        run: |
+          export VERSION="`if [[ $GITHUB_REF == refs\/tags* ]]; then echo ${GITHUB_REF//refs\/tags\//}; fi`"
+          if [ "$VERSION" = "" ];
+          then
+            branch="`if [[ $GITHUB_REF == refs\/heads* ]]; then echo ${GITHUB_REF//refs\/heads\//}; fi`"
+            export VERSION="$branch-SNAPSHOT"
+          fi
+          mkdir -p dist/maven
+          gradle build install -Pin_version="$VERSION"  -Dmaven.repo.local="$PWD/dist/maven"
+
+      - name: Upload maven artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: maven
+          path: dist/maven
+
+  Deploy:
+    needs: [Build]
+    name: Deploy
+    runs-on: ubuntu-18.04
+    steps:   
+      - name: Clone the repo
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 1
+    
+      - name: Download maven artifacts
+        uses: actions/download-artifact@v2
+        with:
+          name: maven
+          path: dist/maven
+      
+      - name: Deploy to github packages
+        if: github.event_name == 'release'
+        run: |
+          source .github/actions/tools/uploadToMaven.sh
+          uploadAllToMaven dist/maven/ https://maven.pkg.github.com/${GITHUB_REPOSITORY} token ${{ secrets.GITHUB_TOKEN }} 

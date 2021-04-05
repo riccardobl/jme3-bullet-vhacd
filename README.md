@@ -14,18 +14,15 @@ plugins {
 
 repositories {
     mavenCentral()
-    maven githubPackage.invoke("riccardobl/v-hacd-java-bindings")
-    maven { url "https://jitpack.io" }
+    maven githubPackage.invoke("riccardobl")
 }
 
 dependencies {
-    compile 'com.github.riccardobl:jme3-bullet-vhacd:1.0.4'
+    compile 'wf.frk:jme3-bullet-vhacd:1.0.5'
 }
 ```
 
 
-## Other managers
-https://jitpack.io/#riccardobl/jme3-bullet-vhacd
 
 ____
 This library relies on vhacd native bindings whose build is currently available for 64 and 32 bit versions of Linux and Windows and for osx.

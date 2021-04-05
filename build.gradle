@@ -10,14 +10,14 @@ apply plugin: 'maven-publish'
 
 repositories {
     mavenCentral()
-    maven githubPackage.invoke("riccardobl/v-hacd-java-bindings")
+    maven githubPackage.invoke("riccardobl")
 }	
 
 
 [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
 
 version= project.hasProperty('in_version') ? project.getProperty('in_version') : '-SNAPSHOT'
-group = "com.jme3"
+group = "wf.frk"
 
 def jme_version ="3.3.2-stable"
 def jme_group =  "org.jmonkeyengine"	
